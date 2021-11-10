@@ -1,179 +1,88 @@
-// var sample = "lllllll";
-// console.log(sample);
+import "./styles.css";
 
-// sample = "aaaaaaa";
-// console.log(sample);
+//追加ボタンを押された時の処理
+const onClickAdd = () => {
+  // text-box => 取得・初期化
+  const inputText = document.getElementById("add-text").value;
+  document.getElementById("add-text").value = "";
 
-// var num = 9;
-// console.log(num);
+  createIncompleteList(inputText);
+};
 
-// num = 8;
-// console.log(num);
+//未完了リストに追加する処理
+const createIncompleteList = (text) => {
+  //div生成
+  const div = document.createElement("div");
+  div.className = "list-row";
 
-// let num = 100;
-// console.log(num);
+  //listタグ生成
+  const li = document.createElement("li");
+  li.innerText = text;
 
-// num = 1000;
-// console.log(num);
+  //button(完了)
+  const completeButton = document.createElement("button");
+  completeButton.innerText = "完了";
+  completeButton.addEventListener("click", () => {
+    //押された完了ボタンの親タグ（div）を未完了リストから削除
+    deleteFromIncompleteList(completeButton.parentNode);
 
-// let num = 111;
+    //完了リストに追加する要素
+    const addTarget = completeButton.parentNode;
 
-// const num = 110;
-// console.log(num);
+    // todoの内容textを取得
+    const text = addTarget.firstElementChild.innerText;
 
-// const sam = {
-//   name: "kane",
-//   age : 30,
-// };
-// sam.name = "lane";
-// sam.sane = "lllll";
-// console.log(sam);
+    //div以下を初期化
+    addTarget.textContent = null;
 
-// const val = ["dog", "cat"];
-// val[0] = "rab";
-// val.push("mon");
-// console.log(val);
+    //liタグ生成
+    const li = document.createElement("li");
+    li.innerText = text;
 
-// const name = "kevin";
-// const age = 31;
+    //戻すボタン生成
+    const backButton = document.createElement("button");
+    backButton.innerText = "戻す";
+    backButton.addEventListener("click", () => {
+      //押された戻すボタンの親タグを完了リストから削除
+      const deleteTarget = backButton.parentNode;
+      document.getElementById("complete-list").removeChild(deleteTarget);
 
-// const message = `私の名前は${name}です。年齢は${age}歳です。`;
-// console.log(message);
+      //textを取得
+      const text = backButton.parentNode.firstElementChild.innerText;
 
-// function func1(num) {
-//   return num;
-// }
-// console.log(func1(10));
+      //未完成リストに追加
+      createIncompleteList(text);
+    });
 
-// const func2 = (str) => {
-// return str;
-// }
-// console.log(func2(19));
+    //divタグの子要素に各要素を設定
+    addTarget.appendChild(li);
+    addTarget.appendChild(backButton);
 
-// const func3 = str => str;
-// console.log(func3(111));
+    //完了リスtに追加
+    document.getElementById("complete-list").appendChild(addTarget);
+  });
 
-// const func4 = (num1, num2) => {
-//   return num1 + num2;
-// }
-// console.log(func4(5,99));
+  //button(削除)
+  const deleteButton = document.createElement("button");
+  deleteButton.innerText = "削除";
+  deleteButton.addEventListener("click", () => {
+    //押された削除ボタンの親タグ（div）を未完了リストから削除
+    deleteFromIncompleteList(deleteButton.parentNode);
+  });
 
-// const pro = {
-//   name: "kane",
-//   age: 30,
-// };
+  //divタグの子要素に各要素を設定
+  div.appendChild(li);
+  div.appendChild(completeButton);
+  div.appendChild(deleteButton);
+  //未完了リストに追加
+  document.getElementById("incomplete-list").appendChild(div);
+};
 
-// const message = `名前は${pro.name}です。年齢は${pro.age}歳です`;
-// console.log(message);
+document
+  .getElementById("add-button")
+  .addEventListener("click", () => onClickAdd());
 
-// const {name, age} = pro;
-// const message1 = `名前は${name}です。年齢は${age}歳です`;
-// console.log(message1);
-
-// const myPro = ["kane", 30];
-// const message = `名前は${myPro[0]}です。年齢は${myPro[1]}歳です。`;
-// console.log(message);
-
-// const [name, age] = myPro;
-// const message1 = `名前は${name}です。年齢は${age}歳です`;
-//  console.log(message1);
-
-// const sayHello = (name = "guest") => console.log(`こんにちは！${name}さん`);
-// sayHello();
-// sayHello("kane");
-
-// const arr = [1, 2, 3];
-// // console.log(arr);
-// // console.log(...arr);
-
-// const sumFunc = (num1, num2) => console.log(num1 + num2);
-
-// // sumFunc(arr[0], arr[1]);
-// sumFunc(...arr);
-
-// const arr1 = [1, 2, 3, 4, 5];
-// const [num1, num2, num3, ...arr2] = arr1;
-// console.log(arr2);
-
-// const arr3 = [10, 20];
-// const arr4 = [30, 40];
-
-// const arr6 = [...arr3];
-// console.log(arr6);
-
-// console.log(arr3 + arr4);
-
-// const arr5 = [...arr3, ...arr4];
-
-// console.log(arr5);
-
-// const arr7 = [...arr3];
-// arr7[0] = 100;
-// console.log(arr3);
-
-const nameArr = ["kane", "kevin", "jesus"];
-
-// for (let index = 0; index < nameArr.length; index++)
-// {
-//   console.log(nameArr[index]);
-// }
-
-// const nameArr2 = nameArr.map((name) => {
-//   return name;
-// });
-
-// console.log(nameArr2);
-
-// nameArr.map((name, index) => console.log(`${index + 1}番目は${name}です。`));
-
-// const numArr = [1, 2, 3, 4, 5];
-// const newArr = numArr.filter((num) => {
-//   return num % 2 === 1;
-// });
-
-// console.log(newArr);
-
-// const newNameArr = nameArr.map((name) => {
-//   if (name === "kevin") {
-//     return name
-//   } else {
-//     return `${name}さん`
-//   }
-// });
-// console.log(newNameArr);
-
-// const val1 = 3 > 0 ? `true` : `false`;
-// console.log(val1);
-
-// const num = 1300;
-// console.log(num.toLocaleString());
-
-// const formatNum = typeof num === "number" ? num.toLocaleString : "数値ではない";
-// console.log(formatNum);
-
-// const checkSum = (num1, num2) => {
-//   return num1 + num2 >= 100 ? "100以上" : "許容範囲内";
-// }
-
-// console.log(checkSum(100, 0));
-
-// const flag1 = true;
-// const flag2 = false
-
-// if (flag1 || flag2) {
-//   console.log("1か2はtrue")
-// }
-
-// if (flag1 && flag2) {
-//   console.log("1も2もtrue")
-// } else {
-//   console.log("NG")
-// }
-
-// const num = 500;
-// const fee = num || "金額未設定";
-// console.log(fee);
-
-// const num2 = 100;
-// const fee2 = num2 && "設定された";
-// console.log(fee2);
+//未完了リストから指定の要素を削除
+const deleteFromIncompleteList = (target) => {
+  document.getElementById("incomplete-list").removeChild(target);
+};

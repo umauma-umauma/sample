@@ -7,7 +7,7 @@ document
 
 //追加ボタンを押された時の処理
 const onClickAdd = () => {
-  // text-box => 取得・初期化
+  // text-box => 取得・text-box初期化
   const inputText = document.getElementById("add-text").value;
   document.getElementById("add-text").value = "";
 

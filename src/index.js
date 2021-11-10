@@ -1,5 +1,10 @@
 import "./styles.css";
 
+//追加ボタンを押された時
+document
+  .getElementById("add-button")
+  .addEventListener("click", () => onClickAdd());
+
 //追加ボタンを押された時の処理
 const onClickAdd = () => {
   // text-box => 取得・初期化
@@ -43,9 +48,8 @@ const createIncompleteList = (text) => {
     const backButton = document.createElement("button");
     backButton.innerText = "戻す";
     backButton.addEventListener("click", () => {
-      //押された戻すボタンの親タグを完了リストから削除
-      const deleteTarget = backButton.parentNode;
-      document.getElementById("complete-list").removeChild(deleteTarget);
+      //押された戻すボタンの要素を完了リストから削除
+      deleteFromCompleteList(backButton.parentNode);
 
       //textを取得
       const text = backButton.parentNode.firstElementChild.innerText;
@@ -54,9 +58,17 @@ const createIncompleteList = (text) => {
       createIncompleteList(text);
     });
 
+    //　削除ボタン生成
+    const sakujoButton = document.createElement("button");
+    sakujoButton.innerText = "削除";
+    sakujoButton.addEventListener("click", () => {
+      deleteFromCompleteList(sakujoButton.parentNode);
+    });
+
     //divタグの子要素に各要素を設定
     addTarget.appendChild(li);
     addTarget.appendChild(backButton);
+    addTarget.appendChild(sakujoButton);
 
     //完了リスtに追加
     document.getElementById("complete-list").appendChild(addTarget);
@@ -78,11 +90,12 @@ const createIncompleteList = (text) => {
   document.getElementById("incomplete-list").appendChild(div);
 };
 
-document
-  .getElementById("add-button")
-  .addEventListener("click", () => onClickAdd());
-
 //未完了リストから指定の要素を削除
 const deleteFromIncompleteList = (target) => {
   document.getElementById("incomplete-list").removeChild(target);
+};
+
+//完了リストから指定の要素を削除
+const deleteFromCompleteList = (target) => {
+  document.getElementById("complete-list").removeChild(target);
 };
